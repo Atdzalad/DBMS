@@ -1,28 +1,28 @@
 #pragma once
 
 #pragma pack(1)
-struct Header 
+struct Header
 {
-    unsigned short type;        // 块类型
-    unsigned short checksum;    // Tcp头部校验
-    unsigned short count;       // 记录数目
-    unsigned short free;        // 空闲块
-    unsigned int next;          // 下一个block的文件偏移量
+    unsigned short type;     // 块类型
+    unsigned short checksum; // Tcp头部校验
+    unsigned short count;    // 记录数目
+    unsigned short free;     // 空闲块
+    unsigned int next;       // 下一个block的文件偏移量
 
-    unsigned short compute(); // 计算checksum
+    unsigned short compute(); // 计算checksum 
 };
 
-struct Tailer 
+struct Tailer
 {
-    unsigned short directory[1];    // 向上增长的记录偏移量数组
+    unsigned short directory[1]; // 向上增长的记录偏移量数组
 };
 #pragma pack(pop)
 
-struct Block 
+struct Block
 {
     static unsigned int size; // 全局静态变量
-    Header header; // 头部
-    
-    Tailer* getTailer();
+    Header header;            // 头部
+
+    Tailer *getTailer();
     void addRecord(void *buffer, int size);
 };
