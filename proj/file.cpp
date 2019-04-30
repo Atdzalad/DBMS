@@ -3,14 +3,36 @@
 // @brief
 // 实现文件
 //
-// @author niexw
-// @email niexiaowen@uestc.edu.cn
+// @author zhangzhe
+// @email 18909545659@163.com
 //
-#include "stdafx.h"
+#include"block.h"
+#include "pch.h"
 #include "file.h"
 
-int File::create(std::string path, int size) 
+int File::create(LPCSTR path, int size,void* file)
 {
-    //CreateFileA
-    return 0;
+    LPDWORD bytenum = 0;
+    handle_ = CreateFileA(
+        path,
+        GENERIC_WRITE,
+        FILE_SHARE_READ,
+        nullptr,
+        OPEN_EXISTING,
+        FILE_FLAG_NO_BUFFERING,
+        nullptr);
+    if (handle_ != INVALID_HANDLE_VALUE)  return false; //文件已经存在
+    handle_ = CreateFileA(
+        (LPCSTR) path,
+        GENERIC_WRITE,
+        FILE_SHARE_READ,
+        nullptr,
+        CREATE_NEW,
+        FILE_FLAG_NO_BUFFERING,
+        nullptr);
+    Block *block = (Block *) file;
+
+    WriteFile(handle_, block, size, bytenum, nullptr);
+
+    return true;
 }

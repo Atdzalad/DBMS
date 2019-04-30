@@ -3,8 +3,8 @@
 // @brief
 // ´æ´¢ÎÄ¼þ
 //
-// @author niexw
-// @email niexiaowen@uestc.edu.cn
+// @author zhangzhe
+// @email 18909545659@163.com
 //
 #pragma once
 
@@ -22,6 +22,6 @@ private:
 
 public:
     File() : handle_(INVALID_HANDLE_VALUE) {}
-    int create(std::string path, int size);
+    int create(LPCSTR path, int size, void* file);
 };
 
