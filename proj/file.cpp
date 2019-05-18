@@ -6,8 +6,7 @@
 // @author zhangzhe
 // @email 18909545659@163.com
 //
-#include"block.h"
-#include "pch.h"
+#include "Data_block.h"
 #include "file.h"
 
 int File::create(LPCSTR path, int size,void* file)
@@ -30,7 +29,7 @@ int File::create(LPCSTR path, int size,void* file)
         CREATE_NEW,
         FILE_FLAG_NO_BUFFERING,
         nullptr);
-    Block *block = (Block *) file;
+    Data_block *block = (Data_block *) file;
 
     WriteFile(handle_, block, size, bytenum, nullptr);
 

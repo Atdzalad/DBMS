@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -116,11 +116,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="block.h" />
+    <ClInclude Include="Bplus_tree.h" />
+    <ClInclude Include="Data_block.h" />
+    <ClInclude Include="Tree_node.h" />
     <ClInclude Include="file.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="block.cpp" />
+    <ClCompile Include="Block.cpp" />
+    <ClCompile Include="Bplus_tree.cpp" />
+    <ClCompile Include="Data_block.cpp" />
+    <ClCompile Include="Tree_node.cpp" />
     <ClCompile Include="file.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="pch.cpp" />

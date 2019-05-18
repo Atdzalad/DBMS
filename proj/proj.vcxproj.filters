@@ -24,6 +24,15 @@
     <ClInclude Include="pch.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Tree_node.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Data_block.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Bplus_tree.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -32,10 +41,19 @@
     <ClCompile Include="file.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="block.cpp">
+    <ClCompile Include="pch.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="pch.cpp">
+    <ClCompile Include="Tree_node.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Data_block.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Block.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Bplus_tree.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
