@@ -1,18 +1,14 @@
 #include <algorithm>
 #include "Bplus_tree.h"
-bool Bplus_tree::Insert_key(char key, Data_block *datapointer)
+bool Bplus_tree::Insert_key(long long int key, Data_block *datapointer)
 {
-    Tree_node *newroot;
-    if (root->header.count == MAXKEY) 
-	{
-        //newroot = new Tree_node;
-        newroot = (Tree_node *) malloc(BLOCK_SIZE);
+    if (root->header.count == MAXKEY) {
+        Tree_node *newroot = (Tree_node *) malloc(BLOCK_SIZE);
         (*newroot).pointer[0] = (char *) root;
-        root->header.type = 1;
         root = newroot;
-        (*root).header.type = 0;
         root->header.count = 0;
         Node_split(root, 0);
+        (*root).header.type = 0;
         Insert_nofull(root, key, datapointer);
         return true;
     } else {
@@ -21,13 +17,13 @@ bool Bplus_tree::Insert_key(char key, Data_block *datapointer)
     }
 }
 
-bool Bplus_tree::Delete_key(char key) { return false; }
+bool Bplus_tree::Delete_key(long long int key) { return false; }
 
-bool Bplus_tree::Serch_key(char key) { return false; }
+bool Bplus_tree::Serch_key(long long int key) { return false; }
 
 bool Bplus_tree::Insert_nofull(
     Tree_node *node,
-    char key,
+    long long int key,
     Data_block *datapointer)
 {
     if ((*node).header.type == 1) { //叶子节点插入
@@ -35,7 +31,7 @@ bool Bplus_tree::Insert_nofull(
         for (int i = 0; i < (*node).header.count && (*node).key[i] < key; i++) {
             temp = i + 1;
         }
-        for (int j = temp; j < (*node).header.count; j++) {
+        for (int j = (*node).header.count - 1; j >= temp; j--) {
             (*node).key[j + 1] = (*node).key[j];
             (*node).pointer[j + 1] = (*node).pointer[j];
         }
@@ -57,16 +53,11 @@ bool Bplus_tree::Insert_nofull(
                     datapointer);
                 return true;
             }
-        } 
-		else
-		{
-            int temp;
-            for (int i = 0; i < (*node).header.count; i++) 
-			{
-                if (node->key[i] > key) 
-				{
-					if (((Tree_node *) (node->pointer[i]))
-                            ->header.count == MAXKEY) {
+        } else {
+            for (int i = 0; i < (*node).header.count; i++) {
+                if (node->key[i] > key) {
+                    if (((Tree_node *) (node->pointer[i]))->header.count ==
+                        MAXKEY) {
                         Node_split(node, i);
                     } else {
                         Insert_nofull(
@@ -75,7 +66,7 @@ bool Bplus_tree::Insert_nofull(
                             datapointer);
                     }
                     return true;
-				}
+                }
             }
         }
     }
@@ -83,10 +74,10 @@ bool Bplus_tree::Insert_nofull(
 
 bool Bplus_tree::Node_split(Tree_node *father, int aim)
 {
-    char mid = father->key[MINIKEY];
-    Tree_node *newnode = (Tree_node*)malloc(BLOCK_SIZE);
+    long long int mid = ((Tree_node *) (father->pointer[aim]))->key[MINIKEY - 1];
+    Tree_node *newnode = (Tree_node *) malloc(BLOCK_SIZE);
     Tree_node *forsplit = (Tree_node *) (*father).pointer[aim];
-    (*newnode).header.type = forsplit->header.type;
+    newnode->header.type = forsplit->header.type;
     if (forsplit->header.type != 1) //内部节点分裂
     {
         for (int i = 0; i < MINIKEY - 1; i++) {
@@ -108,19 +99,29 @@ bool Bplus_tree::Node_split(Tree_node *father, int aim)
         forsplit->header.count = MINIKEY;
         newnode->header.type = forsplit->header.type;
     }
-    father->header.count += 1;
-    if (aim = father->header.count + 1) {
+    
+
+    if (aim == father->header.count + 1 ) {  //插入到最后
         father->key[aim] = mid;
         father->pointer[aim + 1] = (char *) newnode;
-    } else {
-        for (int i = aim; i <= father->header.count - 1; i++) {
+        father->header.count += 1;
+    } 
+	else if (father->header.count == 0)    //插入到头节点
+	{
+        father->key[0] = mid;
+        father->pointer[1] = (char *) newnode;
+        father->header.count += 1;
+    } 
+	else {    //插入到中间
+        for (int i = father->header.count - 1; i >= aim; i--) {
             father->key[i + 1] = father->key[i];
         }
         father->key[aim] = mid;
-        for (int j = aim + 1; j <= father->header.count; j++) {
+        for (int j = father->header.count; j >= aim + 1; j--) {
             father->pointer[j + 1] = father->pointer[j];
         }
         father->pointer[aim + 1] = (char *) newnode;
+        father->header.count += 1;
     }
     return true;
 }

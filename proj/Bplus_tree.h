@@ -8,8 +8,8 @@ struct Bplus_tree
 
   public:
     bool Node_split(Tree_node* father, int aim);
-    bool Insert_key(char key,  Data_block *datapointer);
-    bool Delete_key(char key);
-    bool Serch_key(char key);
-    bool Insert_nofull(Tree_node* node, char key, Data_block *datapointer);
+    bool Insert_key(long long int key,  Data_block *datapointer);
+    bool Delete_key(long long int key);
+    bool Serch_key(long long int key);
+    bool Insert_nofull(Tree_node* node, long long int key, Data_block *datapointer);
 };

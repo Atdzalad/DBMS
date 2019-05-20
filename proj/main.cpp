@@ -20,13 +20,15 @@ int main(int argc, char *argv[])
     Data_block *a = (Data_block *) malloc(BLOCK_SIZE);
     tree.root->header.count = 0;
     tree.root->header.type = 1;
-    int i = 100;
-    while (i--) {
+    for (int i = 1; i <= 1000; i++) {
         tree.Insert_key(i, a);
-        std::cout << tree.root << std::endl;
     }
+    //tree.Insert_key(70, a);
+    //tree.Insert_key(1000, a);
+    Tree_node *c1 = (Tree_node *) tree.root->pointer[0];
+    Tree_node *c2 = (Tree_node *) tree.root->pointer[1];
+    Tree_node *c3 = (Tree_node *) tree.root->pointer[17];
     
-    // std::cout << sizeof(bool);
     system("pause");
     return 0;
 }
